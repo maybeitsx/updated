@@ -1,0 +1,177 @@
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local Window = Rayfield:CreateWindow({
+   Name = "My scripts",
+   Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
+   LoadingTitle = "Blah blah blah",
+   LoadingSubtitle = "by qxzx.",
+   Theme = "Default", -- Check https://docs.sirius.menu/rayfield/configuration/themes
+
+   DisableRayfieldPrompts = false,
+   DisableBuildWarnings = false, -- Prevents Rayfield from warning when the script has a version mismatch with the interface
+
+   ConfigurationSaving = {
+      Enabled = false,
+      FolderName = nil, -- Create a custom folder for your hub/game
+      FileName = "copyscript"
+   },
+
+   Discord = {
+      Enabled = false, -- Prompt the user to join your Discord server if their executor supports it
+      Invite = "noinvitelink", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ ABCD would be ABCD
+      RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+   },
+
+   KeySystem = false, -- Set this to true to use our key system
+   KeySettings = {
+      Title = "Untitled",
+      Subtitle = "Key System",
+      Note = "No method of obtaining the key is provided", -- Use this to tell the user how to get a key
+      FileName = "Key", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
+      SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
+      GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+      Key = {"Hello"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
+   }
+})
+
+local MainTab = Window:CreateTab("My Scripts", 4483362458) -- Title, Image
+local MainSection = MainTab:CreateSection("x")
+
+Rayfield:Notify({
+   Title = "Woah",
+   Content = "tell your friends ;)",
+   Duration = 6.5,
+   Image = nil,
+})
+
+-- Helper to safely load scripts
+local function safeLoad(url)
+   local success, result = pcall(function()
+      return loadstring(game:HttpGet(url))()
+   end)
+   if not success then
+      Rayfield:Notify({
+         Title = "Error",
+         Content = "Failed to load script: " .. tostring(result),
+         Duration = 5,
+         Image = nil,
+      })
+   end
+end
+
+MainTab:CreateButton({
+   Name = "Infinite Yield",
+   Callback = function()
+      safeLoad("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source")
+   end,
+})
+
+MainTab:CreateButton({
+   Name = "System Broken",
+   Callback = function()
+      safeLoad("https://raw.githubusercontent.com/H20CalibreYT/SystemBroken/main/script")
+   end,
+})
+
+MainTab:CreateButton({
+   Name = "ZEH (WILL UNLOAD THIS UI)",
+   Callback = function()
+      safeLoad("https://raw.githubusercontent.com/EnterpriseExperience/MicUpSource/refs/heads/main/retrieve_branch_version.lua")
+   end,
+})
+
+MainTab:CreateButton({
+   Name = "DEX",
+   Callback = function()
+      safeLoad("https://raw.githubusercontent.com/infyiff/backup/main/dex.lua")
+   end,
+})
+
+MainTab:CreateButton({
+   Name = "Spinning Donut",
+   Callback = function()
+      local a, b = 0, 0
+      local running = true
+      local connection
+      connection = game:GetService('RunService').RenderStepped:Connect(function()
+         if not running then
+            connection:Disconnect()
+            return
+         end
+         local z = {}
+         local screen = {}
+
+         for i = 1, 7040 do
+            z[i] = 0
+         end
+
+         for i = 1, 1760 do
+            screen[i] = " "
+         end
+
+         local j = 0
+         while j < 6.28 do
+            j = j + 0.07
+            local i = 0
+            while i < 6.28 do
+               i = i + 0.02
+
+               local sinA = math.sin(a)
+               local cosA = math.cos(a)
+               local cosB = math.cos(b)
+               local sinB = math.sin(b)
+
+               local sini = math.sin(i)
+               local cosi = math.cos(i)
+               local cosj = math.cos(j)
+               local sinj = math.sin(j)
+
+               local cosj2 = cosj + 2
+               local mess = 1 / (sini * cosj2 * sinA + sinj * cosA + 5)
+               local t = sini * cosj2 * cosA - sinj * sinA
+
+               local x = math.floor(40 + 30 * mess * (cosi * cosj2 * cosB - t * sinB))
+               local y = math.floor(12 + 15 * mess * (cosi * cosj2 * sinB + t * cosB))
+               local o = x + 80 * y
+               local N = math.floor(8 * ((sinj * sinA - sini * cosj * cosA) * cosB - sini * cosj * sinA - sinj * cosA - cosi * cosj * sinB))
+
+               if y > 0 and y < 22 and x > 0 and x < 80 and z[o] < mess then
+                  z[o] = mess
+                  screen[o] = string.sub('.,-~:;=!*#$@', math.max(N, 0) + 1, math.max(N, 0) + 1)
+               end
+            end
+         end
+
+         local output = {}
+         for index = 1, #screen do
+            table.insert(output, screen[index])
+            if index % 80 == 0 then
+               table.insert(output, '\n')
+            end
+         end
+
+         print(table.concat(output))
+         rconsoleprint(table.concat(output))
+
+         a += 0.04
+         b += 0.02
+      end)
+      -- Optionally, add a way to stop the donut
+      -- running = false
+   end,
+})
+
+MainTab:CreateButton({
+   Name = "Vc Unsuspend",
+   Callback = function()
+      game:GetService("VoiceChatService"):joinVoice()
+   end,
+})
+
+MainTab:CreateButton({
+   Name = "Best Reanimation",
+   Callback = function()
+      repeat task.wait() until game.Players.LocalPlayer
+      safeLoad("https://raw.githubusercontent.com/0riginalWarrior/Stalkie/refs/heads/main/roblox.lua")
+   end,
+})
